@@ -44,6 +44,8 @@ public class FindMaxAndMin {
 			result.add(l2.get(i));
 		}
 		
+		int[] result1 = result.stream().mapToInt(Integer::valueOf).toArray();
+		
 		result = IntStream.range(0, l1.size())
 				.boxed()
 				.flatMap(i-> Stream.of(l1.get(i),l2.get(i)))
