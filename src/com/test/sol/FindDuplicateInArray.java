@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.test.dao.Empolyee;
 
@@ -101,8 +102,49 @@ public class FindDuplicateInArray {
 	}
 	
 	
+	public Map<Character, Long> findCharacterCount(String str){
+		
+		Map<Character, Long> result = str.chars().mapToObj(c->(char) c).collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		
+		return result;
+	}
 	
+	public char findFirstDuplicateCharacter(String str) {
+		
+		return str.chars()
+			      .mapToObj(c->(char)c)
+			      .collect(Collectors.groupingBy(
+                             Function.identity(), 
+                             LinkedHashMap :: new, 
+                             Collectors.counting()))
+			      .entrySet()
+			      .stream()
+			      .filter(s->s.getValue()>1)
+			      .map(Map.Entry::getKey)
+			      .findFirst()
+			      .orElse(null);
+                
+	}
 	
+	public char findFirstNonRepeatCharacter(String str) {
+		
+		return str.chars()
+				  .mapToObj(c->(char)c)
+				  .collect(Collectors.groupingBy(
+						   Function.identity(),LinkedHashMap :: new, Collectors.counting()))
+				  .entrySet()
+				  .stream()
+				  .filter(s->s.getValue()==1)
+				  .map(Map.Entry::getKey)
+				  .findFirst()
+				  .orElse(null);
+				  
+	}
+	
+	public boolean isPrime(int num) {
+		
+		return IntStream.range(2, (int)Math.sqrt(num)).noneMatch(i-> num%i ==0);
+	}
 	
 	
 }
